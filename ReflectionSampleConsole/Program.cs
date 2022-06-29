@@ -32,6 +32,17 @@ namespace ReflectionSampleConsole
             var typesFromModuleFromExternalAssembly = oneModuleFromExternalAssembly.GetTypes();
             var oneTypeFromModuleFromExternalAssembly =
                 oneModuleFromExternalAssembly.GetType("System.Text.Json.JsonProperty");
+
+            foreach (var constructor in oneTypeFromCurrentAssembly.GetConstructors())
+            {
+                Console.WriteLine(constructor);
+            }
+            Console.WriteLine("|------------------------------------------|");
+
+            foreach (var method in oneTypeFromCurrentAssembly.GetMethods())
+            {
+                Console.WriteLine(method);
+            }
             Console.ReadLine();
         }
     }
