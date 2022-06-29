@@ -35,6 +35,30 @@ namespace ReflectionSampleConsole
             //Overload private ctor çağırma 
             var person3 = personConstructors[2].Invoke(new object[] { "Murat", 29 });
 
+            var person4 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person");
+
+            var person5 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person", 
+                true,
+                BindingFlags.Instance | BindingFlags.Public, 
+                null, 
+                new object[] { "Murat" }, 
+                null, 
+                null);
+
+            var personTypeFromString = Type.GetType("ReflectionSampleConsole.Person");
+            var person6 = Activator.CreateInstance(personTypeFromString, new object[]{"Murat"});
+
+            var person7 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person",
+                true,
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new object[] { "Murat" ,29},
+                null,
+                null);
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var person = assembly.CreateInstance("ReflectionSampleConsole.Person");
+
 
             Console.ReadLine();
         }
