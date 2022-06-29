@@ -7,6 +7,40 @@ namespace ReflectionSampleConsole
     {
         static void Main(string[] args)
         {
+            #region First Module
+
+            #endregion
+
+            var personType = typeof(Person);
+            // Private Constructor
+            var personConstructors = personType
+                .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            //var personConstructors = personType.GetConstructors();
+
+            foreach (var personConstructor in personConstructors)
+            {
+                Console.WriteLine(personConstructor);
+            }
+
+            var privatePersonConstructor = personType.GetConstructor(
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null, new Type[] { typeof(string), typeof(int) },
+                null);
+            Console.WriteLine(privatePersonConstructor);
+
+            //Constructor çağırma
+            var person1 = personConstructors[0].Invoke(null);
+            //Parametre ile ctor çağırma
+            var person2 = personConstructors[1].Invoke(new object[] { "Murat" });
+            //Overload private ctor çağırma 
+            var person3 = personConstructors[2].Invoke(new object[] { "Murat", 29 });
+
+
+            Console.ReadLine();
+        }
+
+        public void InspectingMetadata()
+        {
             string name = "Murat";
             //var stringType = name.GetType();
             var stringType = typeof(string);
