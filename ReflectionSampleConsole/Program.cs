@@ -39,10 +39,16 @@ namespace ReflectionSampleConsole
             }
             Console.WriteLine("|------------------------------------------|");
 
-            foreach (var method in oneTypeFromCurrentAssembly.GetMethods())
+            //foreach (var method in oneTypeFromCurrentAssembly.GetMethods())
+            //{
+            //    Console.WriteLine(method);
+            //}
+
+            foreach (var method in oneTypeFromCurrentAssembly.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
-                Console.WriteLine(method);
+                Console.WriteLine($"{method}, public: {method.IsPublic}");
             }
+
             Console.ReadLine();
         }
     }
