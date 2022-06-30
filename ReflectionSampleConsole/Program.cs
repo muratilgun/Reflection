@@ -5,11 +5,10 @@ namespace ReflectionSampleConsole
 {
     internal class Program
     {
+        private static string _typeFromConfiguration = "ReflectionSampleConsole.Person";
         static void Main(string[] args)
         {
-            #region First Module
 
-            #endregion
 
             var personType = typeof(Person);
             // Private Constructor
@@ -30,6 +29,7 @@ namespace ReflectionSampleConsole
 
             //Constructor çağırma
             var person1 = personConstructors[0].Invoke(null);
+
             //Parametre ile ctor çağırma
             var person2 = personConstructors[1].Invoke(new object[] { "Murat" });
             //Overload private ctor çağırma 
@@ -37,28 +37,31 @@ namespace ReflectionSampleConsole
 
             var person4 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person");
 
-            var person5 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person", 
+            var person5 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person",
                 true,
-                BindingFlags.Instance | BindingFlags.Public, 
-                null, 
-                new object[] { "Murat" }, 
-                null, 
+                BindingFlags.Instance | BindingFlags.Public,
+                null,
+                new object[] { "Murat" },
+                null,
                 null);
 
             var personTypeFromString = Type.GetType("ReflectionSampleConsole.Person");
-            var person6 = Activator.CreateInstance(personTypeFromString, new object[]{"Murat"});
+            var person6 = Activator.CreateInstance(personTypeFromString, new object[] { "Murat" });
 
             var person7 = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person",
                 true,
                 BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                new object[] { "Murat" ,29},
+                new object[] { "Murat", 29 },
                 null,
                 null);
 
             var assembly = Assembly.GetExecutingAssembly();
             var person = assembly.CreateInstance("ReflectionSampleConsole.Person");
 
+            var actualTypeFromConfiguration = Type.GetType(_typeFromConfiguration);
+            var iTalkInstance = Activator.CreateInstance(actualTypeFromConfiguration) as ITalk;
+            iTalkInstance.Talk("Hello world!");
 
             Console.ReadLine();
         }
