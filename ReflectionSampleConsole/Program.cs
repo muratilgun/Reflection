@@ -63,6 +63,36 @@ namespace ReflectionSampleConsole
             var iTalkInstance = Activator.CreateInstance(actualTypeFromConfiguration) as ITalk;
             iTalkInstance.Talk("Hello world!");
 
+            dynamic dynamicITalkInstance = Activator.CreateInstance(actualTypeFromConfiguration);
+            dynamicITalkInstance.Talk("Hello world!");
+            //dynamicITalkInstance.SomeProperty = "value";
+            var personForManipulation = Activator.CreateInstance("ReflectionSampleConsole", "ReflectionSampleConsole.Person",
+                true,
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null,
+                new object[] { "Murat", 29 },
+                null,
+                null).Unwrap();
+
+            var nameProperty =  personForManipulation.GetType().GetProperty("Name");
+            nameProperty.SetValue(personForManipulation, "Sven");
+
+            var ageField = personForManipulation.GetType().GetField("age");
+            ageField.SetValue(personForManipulation,23);
+
+            var privateField = personForManipulation.GetType()
+                .GetField("_aPrivateField", BindingFlags.Instance | BindingFlags.NonPublic);
+            privateField.SetValue(personForManipulation, "updated private field value");
+
+
+            personForManipulation.GetType().InvokeMember("Name", BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty,null,personForManipulation,new []{"Niyazi"});
+
+            personForManipulation.GetType().InvokeMember("_aPrivateField",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField,
+                null, personForManipulation, new[] { "second update for private field value" });
+
+            Console.WriteLine(personForManipulation);
+
             Console.ReadLine();
         }
 
