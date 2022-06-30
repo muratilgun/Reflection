@@ -93,6 +93,13 @@ namespace ReflectionSampleConsole
 
             Console.WriteLine(personForManipulation);
 
+            var talkMethod = personForManipulation.GetType().GetMethod("Talk");
+            talkMethod.Invoke(personForManipulation, new[] { "something to say" });
+
+            personForManipulation.GetType().InvokeMember("Yell",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
+                null, personForManipulation, new[] { "something to yell" });
+
             Console.ReadLine();
         }
 
