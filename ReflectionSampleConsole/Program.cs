@@ -41,6 +41,23 @@ namespace ReflectionSampleConsole
                 Console.WriteLine(genericArgument);
             }
 
+            var createdInstance = Activator.CreateInstance(typeof(List<Person>));
+            Console.WriteLine(createdInstance.GetType());
+
+
+            //var createdResult = Activator.CreateInstance(typeof(Result<>));
+
+            //var openResultType = typeof(Result<>);
+            //var closedResultType = openResultType.MakeGenericType(typeof(Person));
+            //var createdResult = Activator.CreateInstance(closedResultType);
+            
+            var openResultType = Type.GetType("ReflectionSampleConsole.Result`1");
+            var closedResultType = openResultType.MakeGenericType(
+                Type.GetType("ReflectionSampleConsole.Person"));
+            var createdResult = Activator.CreateInstance(closedResultType);
+
+            Console.WriteLine(createdResult.GetType());
+
             Console.ReadLine();
         }
         public void NetworkMonitorExample()
