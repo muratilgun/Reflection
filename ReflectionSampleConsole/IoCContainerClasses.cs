@@ -12,10 +12,10 @@ namespace ReflectionSampleConsole
         {
         }
 
-        public CoffeeService(IWaterService waterService,
-            IBeanService<Catimor> beanService)
-        {
-        }
+        //public CoffeeService(IWaterService waterService,
+        //    IBeanService<Catimor> beanService)
+        //{
+        //}
     }
 
     public interface ICoffeeService

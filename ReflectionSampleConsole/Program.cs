@@ -58,6 +58,19 @@ namespace ReflectionSampleConsole
 
             Console.WriteLine(createdResult.GetType());
 
+            var methodInfo = closedResultType.GetMethod("AlterAndReturnValue");
+            Console.WriteLine(methodInfo);
+
+            var genericMethodInfo = methodInfo.MakeGenericMethod(typeof(Employee));
+            genericMethodInfo.Invoke(createdResult, new object[] { new Employee() });
+
+            var iocContainer = new IoCContainer();
+            iocContainer.Register<IWaterService, TapWaterService>();
+            var waterService = iocContainer.Resolve<IWaterService>();
+
+            iocContainer.Register<ICoffeeService, CoffeeService>();
+            var coffeeService = iocContainer.Resolve<ICoffeeService>();
+
             Console.ReadLine();
         }
         public void NetworkMonitorExample()

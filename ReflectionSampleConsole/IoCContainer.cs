@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,7 +65,7 @@ namespace ReflectionSampleConsole
                     .GetParameters()
                     .Select(p =>
                     {
-                        // make the resolve method generic and invoke it
+                        //make the resolve method generic and invoke it
                         var genericResolveMethod = _resolveMethod
                              .MakeGenericMethod(p.ParameterType);
                         return genericResolveMethod.Invoke(this, null);
