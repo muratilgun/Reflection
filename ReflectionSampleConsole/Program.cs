@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using ReflectionMagic;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -14,6 +15,22 @@ namespace ReflectionSampleConsole
         private static object _warningService;
         private static List<object> _warningServiceParameterValues;
         static void Main(string[] args)
+        {
+            var person = new Person("Kevin");
+
+            var privateField = person.GetType().GetField("_aPrivateField",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+            privateField.SetValue(person, "New private field value");
+
+            person.AsDynamic()._aPrivateField = "Updated value via ReflectionMagic";
+
+            //person.AsDynamic().MyMethod()...
+            //person.AsDynamic().MyProperty = ...
+
+            Console.ReadLine();
+        }
+
+        public void Generics()
         {
             var myList = new List<Person>();
             Console.WriteLine(myList.GetType().Name);
@@ -50,7 +67,7 @@ namespace ReflectionSampleConsole
             //var openResultType = typeof(Result<>);
             //var closedResultType = openResultType.MakeGenericType(typeof(Person));
             //var createdResult = Activator.CreateInstance(closedResultType);
-            
+
             var openResultType = Type.GetType("ReflectionSampleConsole.Result`1");
             var closedResultType = openResultType.MakeGenericType(
                 Type.GetType("ReflectionSampleConsole.Person"));
@@ -73,7 +90,6 @@ namespace ReflectionSampleConsole
             iocContainer.Register<ICoffeeService, CoffeeService>();
             var coffeeService = iocContainer.Resolve<ICoffeeService>();
 
-            Console.ReadLine();
         }
         public void NetworkMonitorExample()
         {
