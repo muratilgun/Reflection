@@ -68,6 +68,8 @@ namespace ReflectionSampleConsole
             iocContainer.Register<IWaterService, TapWaterService>();
             var waterService = iocContainer.Resolve<IWaterService>();
 
+            iocContainer.Register(typeof(IBeanService<>), typeof(ArabicaBeanService<>));
+
             iocContainer.Register<ICoffeeService, CoffeeService>();
             var coffeeService = iocContainer.Resolve<ICoffeeService>();
 
